@@ -1,7 +1,16 @@
 from pathlib import Path
 
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(str(BASE_DIR / ".env"))
+
+SECRET_KEY = env.str("SECRET_KEY")
+DEBUG = env.bool("DEBUG")
+
 
 DEFAULT_APPS = [
     "django.contrib.admin",
@@ -11,7 +20,11 @@ DEFAULT_APPS = [
     "django.contrib.messages",
     # "django.contrib.staticfiles",
 ]
-CUSTOM_APPS = []
+CUSTOM_APPS = [
+    "apps.project.apps.ProjectConfig",
+    "apps.task.apps.TaskConfig",
+    "apps.link.apps.LinkConfig",
+]
 THIRD_PARTY_APPS = []
 
 INSTALLED_APPS = DEFAULT_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
@@ -42,6 +55,17 @@ TEMPLATES = [
         },
     },
 ]
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env.str("DB_NAME"),
+        "USER": env.str("DB_USER"),
+        "PASSWORD": env.str("DB_PWD"),
+        "HOST": env.str("DB_HOST"),
+        "PORT": env.int("DB_PORT"),
+    }
+}
 
 WSGI_APPLICATION = "config.wsgi.application"
 
@@ -74,4 +98,5 @@ USE_TZ = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
