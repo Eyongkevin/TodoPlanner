@@ -6,6 +6,7 @@ from apps.project.utils import START_DATE_END_DATE_CHECK, END_DATE_gte_START_DAT
 
 class Project(AbstractModel, AbstractDesModel):
     # TODO: set user_id = ...
+    user = models.ForeignKey("apps_user.UserPlanner", on_delete=models.CASCADE)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     links = models.ManyToManyField("apps_link.Link", related_name="projects")
@@ -15,6 +16,7 @@ class Project(AbstractModel, AbstractDesModel):
 
     class Meta:
         # TODO: Set unique_together = (user_id, name)
+        unique_together = ["user", "name"]
         ordering = ("modified_at",)
         constraints = [
             models.CheckConstraint(

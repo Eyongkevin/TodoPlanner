@@ -6,6 +6,7 @@ from apps.core.validators import is_hex_color
 
 class Category(AbstractModel):
     # TODO: Set user_id = ...
+    user = models.ForeignKey("apps_user.UserPlanner", on_delete=models.CASCADE)
     color = models.CharField(
         max_length=7, null=True, blank=True, validators=[is_hex_color]
     )  # "#3737A48"
@@ -14,4 +15,5 @@ class Category(AbstractModel):
         return f"{self.name}<{self.color}>"
 
     class Meta:
+        unique_together = ["user", "name"]
         verbose_name_plural = "Categories"

@@ -24,8 +24,11 @@ CUSTOM_APPS = [
     "apps.project.apps.ProjectConfig",
     "apps.task.apps.TaskConfig",
     "apps.link.apps.LinkConfig",
+    "apps.user.apps.UserConfig",
 ]
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "phonenumber_field",
+]
 
 INSTALLED_APPS = DEFAULT_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
 
@@ -64,6 +67,9 @@ DATABASES = {
         "PASSWORD": env.str("DB_PWD"),
         "HOST": env.str("DB_HOST"),
         "PORT": env.int("DB_PORT"),
+        # "TEST": {
+        #     "NAME": "thisismydatabase",
+        # }
     }
 }
 
@@ -99,4 +105,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "apps_user.UserPlanner"

@@ -6,3 +6,5 @@ dev-makemigrations:
 	uv run manage.py makemigrations --settings=config.settings.dev
 dev-startapp:
 	cd apps && uv run ../manage.py startapp $(A) --settings=config.settings.dev
+dev-shell-plus:
+	uv run manage.py shell_plus --settings=config.settings.dev
